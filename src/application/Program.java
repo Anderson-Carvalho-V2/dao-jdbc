@@ -3,10 +3,10 @@ package application;
 import java.util.Date;
 import java.util.List;
 
-import db.Seller;
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
 import model.entities.Department;
+import model.entities.Seller;
 
 public class Program {
 
@@ -31,10 +31,10 @@ public class Program {
 			System.out.println(obj);
 		}
 
-//		System.out.println("\n=== TEST 4: seller insert ===");
-//		Seller newSeller = new Seller(null, "Greg", "Greg@email.com", new Date(), 4000.0, department);
-//		sellerDao.insert(newSeller);
-//		System.out.println("Inserido! Novo Id: " + newSeller.getId());
+		System.out.println("\n=== TEST 4: seller insert ===");
+		Seller newSeller = new Seller(null, "Greg", "Greg@email.com", new Date(), 4000.0, department);
+		sellerDao.insert(newSeller);
+		System.out.println("Inserido! Novo Id: " + newSeller.getId());
 		
 		System.out.println("\n=== TEST 5: seller update ===");
 		seller = sellerDao.findById(1);
@@ -43,7 +43,7 @@ public class Program {
 		System.out.println("Update completo");
 
 		System.out.println("\n=== TEST 6: seller delete ===");
-		sellerDao.deleteById(20);
+		sellerDao.deleteById(10);
 		System.out.println("Deleção concluida!");
 	}
 

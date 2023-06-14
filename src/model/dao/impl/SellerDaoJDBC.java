@@ -13,9 +13,9 @@ import java.util.Map;
 
 import db.DB;
 import db.DbException;
-import db.Seller;
 import model.dao.SellerDao;
 import model.entities.Department;
+import model.entities.Seller;
 
 public class SellerDaoJDBC implements SellerDao {
 
