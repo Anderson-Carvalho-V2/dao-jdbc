@@ -31,16 +31,20 @@ public class Program {
 			System.out.println(obj);
 		}
 
-		System.out.println("\n=== TEST 4: seller insert ===");
-		Seller newSeller = new Seller(null, "Greg", "Greg@email.com", new Date(), 4000.0, department);
-		sellerDao.insert(newSeller);
-		System.out.println("Inserido! Novo Id: " + newSeller.getId());
+//		System.out.println("\n=== TEST 4: seller insert ===");
+//		Seller newSeller = new Seller(null, "Greg", "Greg@email.com", new Date(), 4000.0, department);
+//		sellerDao.insert(newSeller);
+//		System.out.println("Inserido! Novo Id: " + newSeller.getId());
 		
 		System.out.println("\n=== TEST 5: seller update ===");
 		seller = sellerDao.findById(1);
 		seller.setName("Maria Joao");
 		sellerDao.update(seller);
 		System.out.println("Update completo");
+
+		System.out.println("\n=== TEST 6: seller delete ===");
+		sellerDao.deleteById(20);
+		System.out.println("Deleção concluida!");
 	}
 
 }
