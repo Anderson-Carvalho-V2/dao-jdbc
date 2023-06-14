@@ -1,9 +1,11 @@
 package model.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +27,36 @@ public class SellerDaoJDBC implements SellerDao{
 	
 	@Override
 	public void insert(Seller seller) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement pstm = null;
+		try {
+			pstm = conn.prepareStatement(
+					"INSERT INTO seller " 
+					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
+					+ "VALUES (?, ?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+			
+			pstm.setString(1, seller.getName());
+			pstm.setString(2, seller.getEmail());
+			pstm.setDate(3, new Date(seller.getBirthDate().getTime()));
+			pstm.setDouble(4, seller.getBaseSalary());
+			pstm.setInt(5, seller.getDepartment().getId());
+			
+			int linhasAlteras = pstm.executeUpdate();
+			if(linhasAlteras > 0) {
+				ResultSet rs = pstm.getGeneratedKeys();
+				if(rs.next()) {
+					int id = rs.getInt(1);
+					seller.setId(id);
+				}
+				DB.closeResultSet(rs);
+			}else {
+				throw new DbException("Erro inesperado! Nenhuma linha foi alterada");
+			}
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(pstm);
+		}
 	}
 
 	@Override
@@ -90,7 +120,7 @@ public class SellerDaoJDBC implements SellerDao{
 				
 				Department dep = map.get(rs.getInt("DepartmentId"));
 				if(dep == null) {
-					dep = instantiateDepartment(rs);
+			  		dep = instantiateDepartment(rs);
 					map.put(rs.getInt("DepartmentId"), dep);
 				}
 				Seller obj = instantiateSeller(rs, dep);
